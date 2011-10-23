@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="CIDemo" default="build" basedir=".">
+	<property name="output" location="${basedir}/build/" />
+
+	<target name="build" depends="prepare">
+	</target>
+
+	<target name="prepare" depends="clean">
+		<mkdir dir="${output}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${output}" />
+	</target>
+</project>
