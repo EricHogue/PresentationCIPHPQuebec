@@ -3,7 +3,7 @@
 <project name="CIDemo" default="build" basedir=".">
 	<property name="output" location="${basedir}/build/" />
 
-	<target name="build" depends="prepare">
+	<target name="build" depends="prepare,phpunit">
 	</target>
 
 	<target name="prepare" depends="clean">
@@ -12,5 +12,9 @@
 
 	<target name="clean">
 		<delete dir="${output}" />
+	</target>
+
+	<target name="phpunit">
+		<exec executable="phpunit" failonerror="true" />
 	</target>
 </project>
