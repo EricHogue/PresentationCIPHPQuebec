@@ -18,7 +18,7 @@ class HashCreator
      *
      * @return void
      */
-    public function getFunctions($functionCount, $numberOfBits) 
+    public function getFunctions($functionCount, $numberOfBits)
     {
         $functions = array();
         $algo = self::HASH_ALGO;
@@ -26,10 +26,14 @@ class HashCreator
 
 
 
-        for ($functionIndex = 0; $functionIndex < $functionCount; $functionIndex++) {
-            $functions[] = function ($toHash) use ($algo, $neededChars, $functionIndex, $numberOfBits) {
+        for ($functionIndex = 0; $functionIndex < $functionCount;
+                $functionIndex++) {
+            $functions[] = function ($toHash) use ($algo, $neededChars,
+                    $functionIndex, $numberOfBits) {
                 $hash = hash($algo, $toHash);
-                $partialHash = substr($hash, $neededChars * $functionIndex, $neededChars);
+                $partialHash = substr(
+                    $hash, $neededChars * $functionIndex, $neededChars
+                );
                 $value = base_convert($partialHash, 16, 10);
 
                 return $value % $numberOfBits;
@@ -44,7 +48,7 @@ class HashCreator
      *
      * @return void
      */
-    public function neededCharsForXBits($numbersOfBits) 
+    public function neededCharsForXBits($numbersOfBits)
     {
         return (int) ceil(log($numbersOfBits, 16));
     }

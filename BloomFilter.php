@@ -7,22 +7,22 @@ class BloomFilter
     /**
      * @var array
      */
-    private $hashFunctions;
+    private $_hashFunctions;
 
     /**
      * @var int
      */
-    private $numberOfBytesToUse;
+    private $_numberOfBytesToUse;
 
     /**
      * @var array
      */
-    private $bitmap;
+    private $_bitmap;
 
     /**
      * @var integer
      */
-    private $numberOfValues = 0;
+    private $_numberOfValues = 0;
 
 
 
@@ -32,8 +32,8 @@ class BloomFilter
      */
     public function __construct(array $hashFunctions, $numberOfBytesToUse)
     {
-        $this->hashFunctions = $hashFunctions;
-        $this->numberOfBytesToUse = (int) $numberOfBytesToUse;
+        $this->_hashFunctions = $hashFunctions;
+        $this->_numberOfBytesToUse = (int) $numberOfBytesToUse;
 
         $this->initializeBitmap();
     }
@@ -43,16 +43,16 @@ class BloomFilter
      *
      * @return void
      */
-    public function add($wordToAdd) 
+    public function add($wordToAdd)
     {
         $loweredCaseWord = strtolower($wordToAdd);
 
-        foreach ($this->hashFunctions as $function) {
+        foreach ($this->_hashFunctions as $function) {
             $value = $function($loweredCaseWord);
-            $this->bitmap[$value] = 1;
+            $this->_bitmap[$value] = 1;
         }
 
-        $this->numberOfValues++;
+        $this->_numberOfValues++;
         return true;
     }
 
@@ -62,28 +62,28 @@ class BloomFilter
      *
      * @return void
      */
-    public function exists($wordToSearch) 
+    public function exists($wordToSearch)
     {
         $loweredCaseWord = strtolower($wordToSearch);
 
-        foreach ($this->hashFunctions as $function) {
+        foreach ($this->_hashFunctions as $function) {
             $value = $function($loweredCaseWord);
 
-            if (0 === $this->bitmap[$value]) return false;
+            if (0 === $this->_bitmap[$value]) return false;
         }
 
         return true;
     }
 
-    public function __toString() 
+    public function __toString()
     {
         $onCount = 0;
 
-        foreach ($this->bitmap as $isOn) {
+        foreach ($this->_bitmap as $isOn) {
             if (1 === $isOn) $onCount++;
         }
 
-        return "On bits: {$onCount}/" . count($this->bitmap);
+        return "On bits: {$onCount}/" . count($this->_bitmap);
     }
 
     /**
@@ -91,9 +91,9 @@ class BloomFilter
      *
      * @return integer
      */
-    public function valueCount() 
+    public function valueCount()
     {
-        return $this->numberOfValues;
+        return $this->_numberOfValues;
     }
 
     /*
@@ -101,13 +101,13 @@ class BloomFilter
      *
      * @return void
      */
-    private function initializeBitmap() 
+    private function initializeBitmap()
     {
         $bitmap = array();
-        for ($index = 0; $index < $this->numberOfBytesToUse; $index++) {
+        for ($index = 0; $index < $this->_numberOfBytesToUse; $index++) {
             $bitmap[$index] = 0;
         }
 
-        $this->bitmap = $bitmap;
+        $this->_bitmap = $bitmap;
     }
 }

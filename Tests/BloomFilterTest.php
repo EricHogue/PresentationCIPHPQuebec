@@ -4,7 +4,7 @@ class BloomFilterTest extends PHPUnit_Framework_TestCase
     /**
      * @var BloomFilter
      */
-    private $bloomFilter;
+    private $_bloomFilter;
 
 
     public function setup()
@@ -13,7 +13,7 @@ class BloomFilterTest extends PHPUnit_Framework_TestCase
         $numberOfBytestToUse = 16;
 
         $functions = $hashCreator->getFunctions(3, $numberOfBytestToUse);
-        $this->bloomFilter = new BloomFilter($functions, $numberOfBytestToUse);
+        $this->_bloomFilter = new BloomFilter($functions, $numberOfBytestToUse);
     }
 
     public function testCreate()
@@ -23,24 +23,24 @@ class BloomFilterTest extends PHPUnit_Framework_TestCase
 
     public function testAddingAWordReturnsTrue()
     {
-        $this->assertTrue($this->bloomFilter->add('test'));
+        $this->assertTrue($this->_bloomFilter->add('test'));
     }
 
     public function tesWordNotFoundInEmptyFilter()
     {
-        $this->assertFalse($this->bloomFilter->exists('ksadfkal'));
+        $this->assertFalse($this->_bloomFilter->exists('ksadfkal'));
     }
 
     public function testFindWord()
     {
         $word = 'Test';
-        $this->bloomFilter->add($word);
-        $this->assertTrue($this->bloomFilter->exists($word));
+        $this->_bloomFilter->add($word);
+        $this->assertTrue($this->_bloomFilter->exists($word));
     }
 
     public function testFindWordInFilterWithMoreThanOneWord()
     {
-        $filter = $this->bloomFilter;
+        $filter = $this->_bloomFilter;
 
         $filter->add('word1');
         $filter->add('word2');
@@ -52,7 +52,7 @@ class BloomFilterTest extends PHPUnit_Framework_TestCase
 
     public function testDontFindWordInFilterWithManyWord()
     {
-        $filter = $this->bloomFilter;
+        $filter = $this->_bloomFilter;
 
         $filter->add('word1');
         $filter->add('word2');
@@ -64,19 +64,19 @@ class BloomFilterTest extends PHPUnit_Framework_TestCase
 
     public function testFindWordNoMatterTheCase()
     {
-        $this->bloomFilter->add('ToSearch');
-        $this->assertTrue($this->bloomFilter->exists('toSearch'));
+        $this->_bloomFilter->add('ToSearch');
+        $this->assertTrue($this->_bloomFilter->exists('toSearch'));
     }
 
     public function testCountOnEmptyFilterIs0()
     {
-        $this->assertSame(0, $this->bloomFilter->valueCount());
+        $this->assertSame(0, $this->_bloomFilter->valueCount());
     }
 
     public function testCountIs1AfterAddingOneWord()
     {
-        $this->bloomFilter->add('kfljsd');
-        $this->assertSame(1, $this->bloomFilter->valueCount());
+        $this->_bloomFilter->add('kfljsd');
+        $this->assertSame(1, $this->_bloomFilter->valueCount());
     }
 
 }

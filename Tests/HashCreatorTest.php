@@ -5,12 +5,12 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
     /**
      * @var HashCreator
      */
-    private $creator;
+    private $_creator;
 
 
     public function setup()
     {
-        $this->creator = new HashCreator();
+        $this->_creator = new HashCreator();
     }
 
     public function testCreate()
@@ -20,14 +20,14 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
 
     public function testGetHashFunctionsReturnArrayWithXFunctions()
     {
-        $functions = $this->creator->getFunctions(4, 10);
+        $functions = $this->_creator->getFunctions(4, 10);
 
         $this->assertSame(4, count($functions));
     }
 
     public function testGetFunctionsReturnCallables()
     {
-        $functions = $this->creator->getFunctions(4, 10);
+        $functions = $this->_creator->getFunctions(4, 10);
 
         $this->assertTrue(is_callable($functions[3]));
     }
@@ -35,7 +35,7 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
     public function testHashFunctionReturnsIntBetween0AndMaxMinest1()
     {
         $maxValue = 10;
-        $function = $this->creator->getFunctions(1, $maxValue);
+        $function = $this->_creator->getFunctions(1, $maxValue);
 
         $value = $function[0]('test');
         $this->assertTrue($value >= 0 && $value < $maxValue);
@@ -45,7 +45,7 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
     public function testThirdHashFunctionReturnsIntBetween0AndMaxMinest1()
     {
         $maxValue = 10;
-        $function = $this->creator->getFunctions(4, $maxValue);
+        $function = $this->_creator->getFunctions(4, $maxValue);
 
         $value = $function[2]('test');
         $this->assertTrue($value >= 0 && $value < $maxValue);
@@ -53,7 +53,7 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
 
     public function test2HashFunctionsReturnsDifferentValues()
     {
-        $functions = $this->creator->getFunctions(2, 10);
+        $functions = $this->_creator->getFunctions(2, 10);
 
         $toHash = 'Test';
         $fistValue = $functions[0]($toHash);
@@ -64,45 +64,45 @@ class HashCreatorTest extends PHPUnit_Framework_TestCase
 
     public function testNeededCharsFor10BitsIsOne()
     {
-        $this->assertSame(1, $this->creator->neededCharsForXBits(10));
+        $this->assertSame(1, $this->_creator->neededCharsForXBits(10));
     }
 
     public function testNeededCharsFor16BitsIsOne()
     {
-        $this->assertSame(1, $this->creator->neededCharsForXBits(16));
+        $this->assertSame(1, $this->_creator->neededCharsForXBits(16));
     }
 
     public function testNeededCharsFor17BitsIsTwo()
     {
-        $this->assertSame(2, $this->creator->neededCharsForXBits(17));
+        $this->assertSame(2, $this->_creator->neededCharsForXBits(17));
     }
 
     public function testHashValuesIsLessThanMax()
     {
         $numberOfBits = 10;
-        $functions = $this->creator->getFunctions(3, $numberOfBits);
+        $functions = $this->_creator->getFunctions(3, $numberOfBits);
 
         $this->assertLessThan($numberOfBits, $functions[2]('123456789'));
     }
 
     public function testHashFunctionAlwaysReturnTheSameValueForSameText()
     {
-        $functions = $this->creator->getFunctions(1, 100);
-        $value1 = $functions[0]('Test');
-        $value2 = $functions[0]('Test');
+        $functions = $this->_creator->getFunctions(1, 100);
+        $firstValue = $functions[0]('Test');
+        $secondValue = $functions[0]('Test');
 
-        $this->assertSame($value1, $value2);
+        $this->assertSame($firstValue, $secondValue);
     }
 
     public function testRequires2CharsFor128Bits()
     {
-        $this->assertSame(2, $this->creator->neededCharsForXBits(128));
+        $this->assertSame(2, $this->_creator->neededCharsForXBits(128));
     }
 
     public function test128BitsHasIsSmallerThan128()
     {
         $max = 128;
-        $functions = $this->creator->getFunctions(1, $max);
+        $functions = $this->_creator->getFunctions(1, $max);
         $this->assertLessThan($max, $functions[0]('Crayola'));
     }
 }
