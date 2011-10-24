@@ -3,11 +3,12 @@
 <project name="CIDemo" default="build" basedir=".">
 	<property name="output" location="${basedir}/build/" />
 
-	<target name="build" depends="prepare,phpunit">
+	<target name="build" depends="prepare,phpunit,phpcs">
 	</target>
 
 	<target name="prepare" depends="clean">
 		<mkdir dir="${output}" />
+		<mkdir dir="${output}/phpcs" />
 	</target>
 
 	<target name="clean">
@@ -16,5 +17,14 @@
 
 	<target name="phpunit">
 		<exec executable="phpunit" failonerror="true" />
+	</target>
+
+	<target name="phpcs">
+		<exec executable="phpcs">
+			<arg line="--report=checkstyle
+					--report-file=${output}/phpcs/checkstyle.xml
+					--standard=Zend
+					${basedir}" />
+		</exec>
 	</target>
 </project>
