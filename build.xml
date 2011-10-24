@@ -22,7 +22,7 @@
 	<target name="phpcs">
 		<exec executable="phpcs">
 			<arg line="--report=checkstyle
-					--report-file='${output}/phpcs/checkstyle.xml'
+					--report-file=${output}/phpcs/checkstyle.xml
 					--standard=Zend
 					${basedir}" />
 		</exec>
