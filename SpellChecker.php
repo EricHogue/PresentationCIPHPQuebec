@@ -22,10 +22,10 @@ echo "Testing words\n";
 
 $foundWords = array();
 foreach ($words as $wordToCheck) {
-	if ($bloomFilter->exists($wordToCheck))  {
-		echo "{$wordToCheck} was found in the filter\n";
-		$foundWords[strtolower($wordToCheck)] = false;
-	}
+    if ($bloomFilter->exists($wordToCheck))  {
+        echo "{$wordToCheck} was found in the filter\n";
+        $foundWords[strtolower($wordToCheck)] = false;
+    }
 }
 
 $falsePositive = checkForFalsePositive($foundWords);
@@ -37,13 +37,13 @@ print_r($falsePositive);
  * @return void
  */
 function readDictionary(BloomFilter $filter) {
-	error_log('Reading Dictionary');
-	$file = fopen('/usr/share/dict/words', 'r');
+    error_log('Reading Dictionary');
+    $file = fopen('/usr/share/dict/words', 'r');
 
-	while ($line = fgets($file)) {
-		$filter->add(trim($line));
-	}
-	error_log('Done Reading Dictionary');
+    while ($line = fgets($file)) {
+        $filter->add(trim($line));
+    }
+    error_log('Done Reading Dictionary');
 }
 
 
@@ -53,15 +53,15 @@ function readDictionary(BloomFilter $filter) {
  * @return array
  */
 function checkForFalsePositive(array $foundWords) {
-	echo "Checking for false positive\n";
-	$file = fopen('/usr/share/dict/words', 'r');
+    echo "Checking for false positive\n";
+    $file = fopen('/usr/share/dict/words', 'r');
 
-	while ($line = fgets($file)) {
-		$word = strtolower(trim($line));
-		if (array_key_exists($word, $foundWords)) {
-			$foundWords[$word] = true;
-		}
-	}
+    while ($line = fgets($file)) {
+        $word = strtolower(trim($line));
+        if (array_key_exists($word, $foundWords)) {
+            $foundWords[$word] = true;
+        }
+    }
 
-	return $foundWords;
+    return $foundWords;
 }
