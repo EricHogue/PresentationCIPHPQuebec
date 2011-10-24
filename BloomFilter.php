@@ -43,7 +43,8 @@ class BloomFilter
      *
      * @return void
      */
-    public function add($wordToAdd) {
+    public function add($wordToAdd) 
+    {
         $loweredCaseWord = strtolower($wordToAdd);
 
         foreach ($this->hashFunctions as $function) {
@@ -61,7 +62,8 @@ class BloomFilter
      *
      * @return void
      */
-    public function exists($wordToSearch) {
+    public function exists($wordToSearch) 
+    {
         $loweredCaseWord = strtolower($wordToSearch);
 
         foreach ($this->hashFunctions as $function) {
@@ -73,7 +75,8 @@ class BloomFilter
         return true;
     }
 
-    public function __toString() {
+    public function __toString() 
+    {
         $onCount = 0;
 
         foreach ($this->bitmap as $isOn) {
@@ -88,7 +91,8 @@ class BloomFilter
      *
      * @return integer
      */
-    public function valueCount() {
+    public function valueCount() 
+    {
         return $this->numberOfValues;
     }
 
@@ -97,7 +101,8 @@ class BloomFilter
      *
      * @return void
      */
-    private function initializeBitmap() {
+    private function initializeBitmap() 
+    {
         $bitmap = array();
         for ($index = 0; $index < $this->numberOfBytesToUse; $index++) {
             $bitmap[$index] = 0;

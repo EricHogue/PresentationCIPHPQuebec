@@ -18,7 +18,8 @@ class HashCreator
      *
      * @return void
      */
-    public function getFunctions($functionCount, $numberOfBits) {
+    public function getFunctions($functionCount, $numberOfBits) 
+    {
         $functions = array();
         $algo = self::HASH_ALGO;
         $neededChars = $this->neededCharsForXBits($numberOfBits);
@@ -43,7 +44,8 @@ class HashCreator
      *
      * @return void
      */
-    public function neededCharsForXBits($numbersOfBits) {
+    public function neededCharsForXBits($numbersOfBits) 
+    {
         return (int) ceil(log($numbersOfBits, 16));
     }
 }

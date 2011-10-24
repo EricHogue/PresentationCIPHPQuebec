@@ -17,7 +17,8 @@ class WordGenerator
      *
      * @return void
      */
-    public function generateWords($wordsToGenerate, $wordsLength) {
+    public function generateWords($wordsToGenerate, $wordsLength) 
+    {
         $words = array();
         for ($i = 0; $i < $wordsToGenerate; $i++) {
             $words[] = $this->generateOneWord($wordsLength);
@@ -31,7 +32,8 @@ class WordGenerator
      *
      * @return void
      */
-    public function generateOneWord($length) {
+    public function generateOneWord($length) 
+    {
         $word = '';
         for ($i = 0; $i < $length; $i++) {
             $word .= chr(rand(65, 90));

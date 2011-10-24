@@ -36,7 +36,8 @@ print_r($falsePositive);
  *
  * @return void
  */
-function readDictionary(BloomFilter $filter) {
+function readDictionary(BloomFilter $filter) 
+{
     error_log('Reading Dictionary');
     $file = fopen('/usr/share/dict/words', 'r');
 
@@ -52,7 +53,8 @@ function readDictionary(BloomFilter $filter) {
  *
  * @return array
  */
-function checkForFalsePositive(array $foundWords) {
+function checkForFalsePositive(array $foundWords) 
+{
     echo "Checking for false positive\n";
     $file = fopen('/usr/share/dict/words', 'r');
 
