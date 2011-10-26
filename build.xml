@@ -3,12 +3,13 @@
 <project name="CIDemo" default="build" basedir=".">
     <property name="output" location="${basedir}/build/" />
 
-    <target name="build" depends="prepare,phpunit,phpcs">
+    <target name="build" depends="prepare,phpunit,phpcs,pdepend">
     </target>
 
     <target name="prepare" depends="clean">
         <mkdir dir="${output}" />
         <mkdir dir="${output}/phpcs" />
+        <mkdir dir="${output}/pdepend" />
     </target>
 
     <target name="clean">
@@ -27,4 +28,16 @@
                     ${basedir}" />
         </exec>
     </target>
+
+	<target name="pdepend">
+		<exec executable="pdepend">
+			<arg line="
+				--jdepend-xml=${output}/pdepend/jdepend.xml
+				--jdepend-chart=${output}/pdepend/dependencies.svg
+				--overview-pyramid=${output}/pdepend/overview-pyramid.svg
+				--ignore=Tests/
+				.
+			" />
+		</exec>
+	</target>
 </project>
