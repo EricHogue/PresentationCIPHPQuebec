@@ -3,7 +3,7 @@
 <project name="CIDemo" default="build" basedir=".">
     <property name="output" location="${basedir}/build/" />
 
-    <target name="build" depends="prepare,phpunit,phpcs,pdepend,phpmd">
+    <target name="build" depends="prepare,phpunit,phpcs,pdepend,phpmd,phpcpd">
     </target>
 
     <target name="prepare" depends="clean">
@@ -11,6 +11,7 @@
         <mkdir dir="${output}/phpcs" />
         <mkdir dir="${output}/pdepend" />
         <mkdir dir="${output}/phpmd" />
+        <mkdir dir="${output}/phpcpd" />
     </target>
 
     <target name="clean">
@@ -45,6 +46,12 @@
 	<target name="phpmd" depends="prepare">
 		<exec executable="phpmd">
 			<arg line=". xml codesize,unusedcode,naming,design --reportfile ${output}/phpmd/messdetector.xml --exclude Tests/" />
+		</exec>
+	</target>
+
+	<target name="phpcpd" depends="prepare">
+		<exec executable="phpcpd">
+			<arg line=" --log-pmd ${output}/phpcpd/phpcpd.xml --min-tokens 30 ." />
 		</exec>
 	</target>
 </project>
