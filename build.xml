@@ -3,24 +3,25 @@
 <project name="CIDemo" default="build" basedir=".">
     <property name="output" location="${basedir}/build/" />
 
-    <target name="build" depends="prepare,phpunit,phpcs,pdepend">
+    <target name="build" depends="prepare,phpunit,phpcs,pdepend,phpmd">
     </target>
 
     <target name="prepare" depends="clean">
         <mkdir dir="${output}" />
         <mkdir dir="${output}/phpcs" />
         <mkdir dir="${output}/pdepend" />
+        <mkdir dir="${output}/phpmd" />
     </target>
 
     <target name="clean">
         <delete dir="${output}" />
     </target>
 
-    <target name="phpunit">
+	<target name="phpunit" depends="prepare">
         <exec executable="phpunit" failonerror="true" />
     </target>
 
-    <target name="phpcs">
+	<target name="phpcs" depends="prepare">
         <exec executable="phpcs">
             <arg line="--report=checkstyle
                     --report-file=${output}/phpcs/checkstyle.xml
@@ -29,7 +30,7 @@
         </exec>
     </target>
 
-	<target name="pdepend">
+	<target name="pdepend" depends="prepare">
 		<exec executable="pdepend">
 			<arg line="
 				--jdepend-xml=${output}/pdepend/jdepend.xml
@@ -38,6 +39,12 @@
 				--ignore=Tests/
 				.
 			" />
+		</exec>
+	</target>
+
+	<target name="phpmd" depends="prepare">
+		<exec executable="phpmd">
+			<arg line=". html codesize,unusedcode,naming,design --reportfile ${output}/phpmd/messdetector.html --exclude Tests/" />
 		</exec>
 	</target>
 </project>
