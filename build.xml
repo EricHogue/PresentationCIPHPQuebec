@@ -44,7 +44,7 @@
 
 	<target name="phpmd" depends="prepare">
 		<exec executable="phpmd">
-			<arg line=". html codesize,unusedcode,naming,design --reportfile ${output}/phpmd/messdetector.html --exclude Tests/" />
+			<arg line=". xml codesize,unusedcode,naming,design --reportfile ${output}/phpmd/messdetector.xml --exclude Tests/" />
 		</exec>
 	</target>
 </project>
