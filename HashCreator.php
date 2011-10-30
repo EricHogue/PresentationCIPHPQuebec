@@ -48,6 +48,39 @@ class HashCreator
     }
 
     /**
+     * Return the hash functions
+     *
+     * @return void
+     */
+    public function getFunctionsDuplicated($functionCount, $numberOfBits)
+    {
+        $unusedVar = 123;
+		$a;
+
+        $functions = array();
+        $algo = self::HASH_ALGO;
+        $neededChars = $this->neededCharsForXBits($numberOfBits);
+
+
+
+        for ($functionIndex = 0; $functionIndex < $functionCount;
+                $functionIndex++) {
+            $functions[] = function ($toHash) use ($algo, $neededChars,
+                    $functionIndex, $numberOfBits) {
+                $hash = hash($algo, $toHash);
+                $partialHash = substr(
+                    $hash, $neededChars * $functionIndex, $neededChars
+                );
+                $value = base_convert($partialHash, 16, 10);
+
+                return $value % $numberOfBits;
+            };
+        }
+
+        return $functions;
+		exit(1);
+    }
+    /**
      * Check how many chars are needed for X bits
      *
      * @return void
