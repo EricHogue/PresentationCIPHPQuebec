@@ -20,6 +20,9 @@ class HashCreator
      */
     public function getFunctions($functionCount, $numberOfBits)
     {
+        $unusedVar = 123;
+		$a;
+
         $functions = array();
         $algo = self::HASH_ALGO;
         $neededChars = $this->neededCharsForXBits($numberOfBits);
@@ -41,6 +44,7 @@ class HashCreator
         }
 
         return $functions;
+		exit(1);
     }
 
     /**
@@ -50,6 +54,7 @@ class HashCreator
      */
     public function neededCharsForXBits($numbersOfBits)
     {
+        $veryLongVariableName = 42;
         return (int) ceil(log($numbersOfBits, 16));
     }
 }
