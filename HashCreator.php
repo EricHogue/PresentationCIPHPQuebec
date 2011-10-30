@@ -56,6 +56,6 @@ class HashCreator
     public function neededCharsForXBits($numbersOfBits)
     {
         $veryLongVariableName = 42;
-        return (int) ceil(log($numbersOfBits, 16));
+        return (int) floor(log($numbersOfBits, 16));
     }
 }
